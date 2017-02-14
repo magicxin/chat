@@ -17,8 +17,15 @@
          <div class="content" id="chat">
              <ul id="chat_conatiner">
              </ul>
-
          </div>
+		 <div class="tools">
+			<div class="show">
+				<input type="image" src="public/img/img.png" class="show_img"/>
+			</div>
+			<div class="show">
+				<input type="file" accept="image/*;capture=camera" id="img">
+			</div>
+		 </div>
          <div class="action" id= "workplace">
 			 <div class="act_left">
 				 <input id="input"/>
@@ -30,137 +37,7 @@
          </div>
     </div>
     <script type="text/javascript" src="public/js/socket.io.js"></script>
-    <script type="text/javascript">
-		  var page = getBrowserInterfaceSize();
-		  console.log(page.pageWidth);
-		  var body = document.getElementById('body');
-		  body.style.height = page.pageHeight + 'px';
-		  
-		  var input = document.getElementById('input');
-		  input.style.height = page.pageHeight*0.06 + 'px';
-		  input.style.width = parseInt(page.pageWidth)*0.86-4 + 'px';
-		  
-		  var btn = document.getElementById('send');
-		  btn.style.height = page.pageHeight*0.06 + 'px';
-		  btn.style.width = parseInt(page.pageWidth)*0.14- + 'px';
-		  
-		  var content = document.getElementById('chat');
-		  content.style.height = parseInt(page.pageHeight)*0.94-32 + 'px';
-		  
-		  var action = document.getElementById('workplace');
-		  action.style.height = page.pageHeight*0.06 + 'px';
-		 
-          var ws = io.connect('http://139.199.168.15:8888');
-          var sendMsg = function(msg){
-              ws.emit('send.message', msg);
-          }
-          var addMessage = function(from, msg){
-              var li = document.createElement('li');
-              li.innerHTML = '<span>' + from + '</span>' + ' : ' + msg;
-              document.querySelector('#chat_conatiner').appendChild(li);
-
-              // 设置内容区的滚动条到底部
-              document.querySelector('#chat').scrollTop = document.querySelector('#chat').scrollHeight;
-
-              // 并设置焦点
-              document.querySelector('input').focus();
-
-          }
-
-          var send = function(){
-              var ele_msg = document.querySelector('input');
-              var msg = ele_msg.value.replace('\r\n', '').trim();
-              //console.log(msg);
-              if(!msg) return;
-              sendMsg(msg);
-              // 添加消息到自己的内容区
-              addMessage('你', msg);
-              ele_msg.value = '';
-          }
-
-          ws.on('connect', function(){
-              var nickname = window.prompt('输入你的昵称!');
-              while(!nickname){
-                  nickname = window.prompt('昵称不能为空，请重新输入!')
-              }
-              ws.emit('join', nickname);
-          });
-
-          // 昵称有重复
-          ws.on('nickname', function(){
-              var nickname = window.prompt('昵称有重复，请重新输入!');
-              while(!nickname){
-                  nickname = window.prompt('昵称不能为空，请重新输入!')
-              }
-              ws.emit('join', nickname);
-          });
-
-          ws.on('send.message', function(from, msg){
-              addMessage(from, msg);
-          });
-
-          ws.on('announcement', function(from, msg){
-              addMessage(from, msg);
-          });
-		  
-		  ws.on('people', function(msg){
-              var span = document.getElementById('people_num');
-			  span.innerHTML = '当前在线人数：' + msg + '人';
-          });
-
-          document.querySelector('input').addEventListener('keypress', function(event){
-              if(event.which == 13){
-                  send();
-              }
-          });
-          document.querySelector('input').addEventListener('keydown', function(event){
-              if(event.which == 13){
-                  send();
-              }
-          });
-          document.querySelector('#send').addEventListener('click', function(){
-              send();
-          });
-
-          //document.querySelector('#clear').addEventListener('click', function(){
-            //  document.querySelector('#chat_conatiner').innerHTML = '';
-          //});
-		  // .container 设置了 overflow 属性, 导致 Android 手机下输入框获取焦点时, 输入法挡住输入框的 bug
-    // 相关 issue: https://github.com/weui/weui/issues/15
-    // 解决方法:
-    // 0. .container 去掉 overflow 属性, 但此 demo 下会引发别的问题
-    // 1. 参考 http://stackoverflow.com/questions/23757345/android-does-not-correctly-scroll-on-input-focus-if-not-body-element
-    //    Android 手机下, input 或 textarea 元素聚焦时, 主动滚一把
-    if (/Android/gi.test(navigator.userAgent)) {
-        window.addEventListener('resize', function () {
-            if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
-                window.setTimeout(function () {
-                    document.activeElement.scrollIntoViewIfNeeded();
-                }, 0);
-            }
-        })
-    }
-	
-	function getBrowserInterfaceSize() {
-    var pageWidth = window.innerWidth;
-    var pageHeight = window.innerHeight;
-
-    if (typeof pageWidth != "number") {
-        //在标准模式下面
-        if (document.compatMode == "CSS1Compat" ) {
-            pageWidth = document.documentElement.clientWidth;
-            pageHeight = document.documentElement.clientHeight;
-        } else {
-            pageWidth = document.body.clientWidth;
-            pageHeight = window.body.clientHeight;
-        }
-    }
-
-    return {
-        pageWidth: pageWidth,
-        pageHeight: pageHeight
-    }
-}
-    </script>
+	<script type="text/javascript" src="public/js/utils.js"></script>
+    <script type="text/javascript" src="public/js/init.js"></script>
 </body>
 </html>

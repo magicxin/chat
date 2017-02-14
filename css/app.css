@@ -35,23 +35,11 @@
 }
 .tools{
 	width : 100%;
-	height : 50px;
 }
-.show {
-	margin : 10px;
-}
-.show_img {
-	position:absolute;
-	z-index : 0;
+img {
 	width : 30px;
 	height : 30px;
-}
-#img {
-	position:absolute;
-	z-index : 1;
-	opacity : 0;
-	width : 30px;
-	height : 30px;
+	margin: 10px;
 }
 input {
 	font-size: 20px;
@@ -59,8 +47,4 @@ input {
 }
 button {
 	text-align : center;
-	border : none;
-}
-.send_img {
-	max-width : 50%;
 }

@@ -75,5 +75,11 @@ ws.on('connection', function(client){
         }
     })
 
+	//接收用户发来的图片
+	 client.on('img', function(imgData) {
+		//通过一个newImg事件分发到除自己外的每个用户
+		console.log(imgData);
+		 client.broadcast.emit('newImg', client.nickname, imgData);
+	 });
 })
 
