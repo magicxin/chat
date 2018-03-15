@@ -4,6 +4,7 @@
   "description": "this is test for nodejs",
   "main": "io_multigame.js",
   "dependencies": {
+    "connect": "~2.14.4",
     "express": "^4.0.0",
     "iconv-lite": "~0.2.11",
     "socket.io": "^0.9.17",
@@ -12,7 +13,6 @@
     "websocket.io": "~0.2.1"
   },
   "devDependencies": {
-    "connect": "^3.6.6",
     "pug": "^2.0.1"
   },
   "scripts": {
